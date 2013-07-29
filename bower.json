@@ -1,0 +1,7 @@
+{
+  "name": "persona-require",
+  "version": "0.0.0",
+  "dependencies": {
+    "requirejs": "git://github.com/jrburke/requirejs.git#~2.1.8"
+  }
+}

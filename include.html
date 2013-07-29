@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Hi</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body>
+
+    <p><button id="login">login</button></p>
+    <p><button id="logout">logout</button></p>
+    <script src="https://login.persona.org/include.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>
+
+    function postMessage(options) {
+      if (!options) {
+        throw new Error('No options passed to postMessage()');
+      }
+      parent.postMessage(JSON.stringify({
+        type: options.type,
+        data: options.data
+      }), "*");
+    }
+
+      $("#login").click(function(){
+        navigator.id.request();
+      });
+
+      $("#logout").click(function(){
+        navigator.id.logout();
+      });
+
+      navigator.id.watch({
+        onlogin: function(assertion) {
+          postMessage({
+            type: 'onlogin',
+            data: {
+              assertion: assertion
+            }
+          })
+        },
+        onlogout: function() {
+          postMessage({
+            type: 'onlogout'
+          });
+        },
+        onready: function() {
+          postMessage({
+            type: 'onready'
+          });
+        }
+      });
+
+          </script>
+  </body>
+</html>
